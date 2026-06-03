@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! | Warm Wishes for Your Birthday</title>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Poppins:wght@300;500;700;900&family=Sacramento&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for amazing explosion effects -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. Envelop / Greeting Card Opener (प्रवेश द्वार) -->
+    <div id="card-envelope-wrapper" class="envelope-wrapper">
+        <div class="envelope-container">
+            <div class="envelope">
+                <div class="flap top-flap"></div>
+                <div class="flap left-flap"></div>
+                <div class="flap right-flap"></div>
+                <div class="letter">
+                    <div class="letter-content">
+                        <i class="fa-solid fa-cake-candles letter-icon"></i>
+                        <h2>Special For You</h2>
+                        <p>Today is a very special day! Click the button below to open it.</p>
+                        <button id="open-envelope-btn" class="open-btn">Open <i class="fa-solid fa-envelope-open"></i></button>
+                    </div>
+                </div>
+                <div class="heart-seal"></div>
+            </div>
+            <div class="envelope-shadow"></div>
+            <h1 class="envelope-instruction">Click the envelope to open! 🌟</h1>
+        </div>
+    </div>
+
+    <!-- 2. Main Happy Birthday Page Content -->
+    <div id="main-content" class="main-content hidden">
+        
+        <!-- Music & Sound Control -->
+        <div class="sound-control-container">
+            <button id="music-toggle-btn" class="sound-btn" title="Toggle Music Play/Pause">
+                <i class="fa-solid fa-volume-xmark mute-icon"></i>
+                <i class="fa-solid fa-volume-high play-icon hidden"></i>
+            </button>
+            <span class="music-tooltip">Play Music! 🎵</span>
+        </div>
+
+        <!-- Floating Particles Container -->
+        <div id="balloon-container" class="balloon-container"></div>
+        <div id="stars-container" class="stars-container"></div>
+
+        <!-- Hero Greeting Section -->
+        <header class="hero-section">
+            <div class="birthday-banner-container">
+                <div class="profile-image-container animate-pop">
+                    <img src="images/aman.png" alt="Aman Profile" class="hero-profile-img">
+                </div>
+                <h2 class="pre-title animate-pop">HAPPY BIRTHDAY</h2>
+                <h1 class="boy-name animate-glow">Dear Brother <span class="highlight">Aman</span></h1>
+                <p class="birthday-sub">Sending you lots of love and warm wishes on your special day! 🎉</p>
+            </div>
+            
+            <!-- Countdown to Party / Special message -->
+            <div class="wishes-ticker">
+                <div class="ticker-content">
+                    ✨ Happy Birthday! | ✨ Live happy always! | ✨ May God give you success! | ✨ Live for thousands of years! | ✨ Happy Birthday to the coolest boy!
+                </div>
+            </div>
+        </header>
+
+        <!-- Birthday Cake Section with Interactive Candle Blowing -->
+        <section class="section cake-section">
+            <div class="section-title">
+                <h2>Blow the candles and make a wish! 🎂</h2>
+                <p>Click on the candles or blow (allow microphone access) to extinguish them!</p>
+            </div>
+
+            <div class="cake-container">
+                <!-- Microphone Permission for blowing detection -->
+                <div class="mic-request-container">
+                    <button id="mic-enable-btn" class="secondary-btn">
+                        <i class="fa-solid fa-microphone"></i> Enable Microphone to Blow out Candles
+                    </button>
+                    <span id="mic-status" class="mic-status">Microphone is Off</span>
+                </div>
+
+                <div class="cake">
+                    <div class="candle-container">
+                        <!-- Candle 1 -->
+                        <div class="candle active-candle" id="candle-1">
+                            <div class="flame"></div>
+                            <div class="thread"></div>
+                            <div class="candle-body"></div>
+                        </div>
+                        <!-- Candle 2 -->
+                        <div class="candle active-candle" id="candle-2">
+                            <div class="flame"></div>
+                            <div class="thread"></div>
+                            <div class="candle-body"></div>
+                        </div>
+                        <!-- Candle 3 -->
+                        <div class="candle active-candle" id="candle-3">
+                            <div class="flame"></div>
+                            <div class="thread"></div>
+                            <div class="candle-body"></div>
+                        </div>
+                    </div>
+                    <div class="frosting frosting-top"></div>
+                    <div class="cake-layer layer-top">
+                        <div class="cherry-decor">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <div class="frosting frosting-middle"></div>
+                    <div class="cake-layer layer-bottom"></div>
+                    <div class="stand"></div>
+                </div>
+                
+                <div id="cake-wishes" class="cake-wishes hidden">
+                    <div class="wish-bubble">
+                        <h3>✨ Your wish has come true! ✨</h3>
+                        <p>May God fulfill all your dreams and desires!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Album Polaroid Gallery Section -->
+        <section class="section gallery-section">
+            <div class="section-title">
+                <h2>Journey of Memories (Photo Gallery) 📸</h2>
+                <p>A few selected and lovely pictures of Rohan!</p>
+            </div>
+
+            <div class="polaroid-wrapper">
+                <!-- Polaroid 1 -->
+                <div class="polaroid-card animate-polaroid" style="--rotation: -5deg;">
+                    <div class="polaroid-img-container">
+                        <img id="polaroid-img-1" src="images/boy_childhood.png" alt="Childhood Memories">
+                        <div class="img-placeholder"><i class="fa-regular fa-image"></i><br>Childhood Memories</div>
+                    </div>
+                    <div class="polaroid-caption">Sweet Childhood 👶</div>
+                </div>
+                <!-- Polaroid 2 -->
+                <div class="polaroid-card animate-polaroid" style="--rotation: 3deg;">
+                    <div class="polaroid-img-container">
+                        <img id="polaroid-img-2" src="images/boy_style.png" alt="Cool Look">
+                        <div class="img-placeholder"><i class="fa-regular fa-image"></i><br>Stylish Look</div>
+                    </div>
+                    <div class="polaroid-caption">Cool Dude 😎</div>
+                </div>
+                <!-- Polaroid 3 -->
+                <div class="polaroid-card animate-polaroid" style="--rotation: -3deg;">
+                    <div class="polaroid-img-container">
+                        <img id="polaroid-img-3" src="images/boy_smiling.png" alt="With Friends">
+                        <div class="img-placeholder"><i class="fa-regular fa-image"></i><br>Smiling Face</div>
+                    </div>
+                    <div class="polaroid-caption">Keep Smiling Always 😄</div>
+                </div>
+                <!-- Polaroid 4 -->
+                <div class="polaroid-card animate-polaroid" style="--rotation: 4deg;">
+                    <div class="polaroid-img-container">
+                        <img id="polaroid-img-4" src="images/boy_party.png" alt="Party Time">
+                        <div class="img-placeholder"><i class="fa-regular fa-image"></i><br>Party Fun</div>
+                    </div>
+                    <div class="polaroid-caption">Party Time! 🕺</div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p>Made with ❤️ for <span class="highlight">Aman</span></p>
+            <p>2026 Birthday Special Page</p>
+        </footer>
+    </div>
+
+    <!-- Custom Birthday Song Audio Element -->
+    <audio id="birthday-song" src="song.mp3" loop></audio>
+
+    <!-- Script file -->
+    <script src="script.js"></script>
+</body>
+</html>

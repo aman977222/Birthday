@@ -1,0 +1,1238 @@
+/* ==========================================
+   DESIGN SYSTEM & GLOBAL STYLES
+   ========================================== */
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+    --primary-color: #06b6d4; /* Teal / Cyan */
+    --secondary-color: #6366f1; /* Indigo */
+    --accent-color: #f59e0b; /* Gold/Amber */
+    --success-color: #10b981; /* Emerald */
+    --danger-color: #ef4444; /* Rose */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Hind', sans-serif;
+    --font-handwritten: 'Sacramento', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-gradient);
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+/* Common Section Layout */
+.section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #00f2fe, #4facfe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: var(--primary-color);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.section-title p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Buttons */
+.open-btn, .submit-btn, .secondary-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.open-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+}
+
+.open-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(6, 182, 212, 0.4);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #d97706 100%);
+    color: white;
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+}
+
+/* ==========================================
+   1. ENVELOPE OPENER CARD STYLES
+   ========================================== */
+
+.envelope-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #1e1b4b 0%, #030712 100%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s cubic-bezier(0.075, 0.82, 0.165, 1), visibility 1s;
+}
+
+.envelope-wrapper.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.envelope-container {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    background: #1e293b;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    transition: transform 0.5s ease;
+}
+
+.envelope:hover {
+    transform: translateY(-10px);
+}
+
+.flap {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.top-flap {
+    top: 0;
+    left: 0;
+    border-width: 110px 160px 0 160px;
+    border-color: #334155 transparent transparent transparent;
+    z-index: 3;
+    transform-origin: top;
+    transition: transform 0.6s ease 0.2s, z-index 0.2s ease 0.4s;
+}
+
+.left-flap {
+    top: 0;
+    left: 0;
+    border-width: 110px 0 110px 160px;
+    border-color: transparent transparent transparent #223047;
+    z-index: 2;
+}
+
+.right-flap {
+    top: 0;
+    right: 0;
+    border-width: 110px 160px 110px 0;
+    border-color: transparent #223047 transparent transparent;
+    z-index: 2;
+}
+
+/* Opened Envelope State */
+.envelope.open .top-flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope.open .letter {
+    transform: translateY(-140px) scale(1.05);
+    z-index: 2;
+}
+
+.letter {
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    width: 290px;
+    height: 200px;
+    background: white;
+    border-radius: 5px;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.letter-content {
+    padding: 15px;
+    text-align: center;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.letter-icon {
+    font-size: 2.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    animation: pulse 1.5s infinite alternate;
+}
+
+.letter-content h2 {
+    font-size: 1.4rem;
+    color: #0f172a;
+    margin-bottom: 5px;
+}
+
+.letter-content p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.letter-content .open-btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+.heart-seal {
+    position: absolute;
+    top: 95px;
+    left: calc(50% - 25px);
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, #f43f5e 40%, #be123c 100%);
+    border-radius: 50%;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(244, 63, 94, 0.4);
+    transition: transform 0.4s ease, opacity 0.4s ease 0.2s;
+}
+
+.heart-seal::before {
+    content: '❤';
+    color: white;
+    font-size: 1.5rem;
+    animation: heartbeat 1.2s infinite;
+}
+
+.envelope.open .heart-seal {
+    transform: scale(0) rotate(45deg);
+    opacity: 0;
+}
+
+.envelope-shadow {
+    position: absolute;
+    bottom: -20px;
+    left: 10px;
+    width: 300px;
+    height: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    filter: blur(8px);
+    border-radius: 50%;
+}
+
+.envelope-instruction {
+    font-size: 1.4rem;
+    text-align: center;
+    color: var(--text-secondary);
+    animation: float 2s infinite ease-in-out;
+}
+
+/* ==========================================
+   2. MAIN CONTENT & HERO BANNER
+   ========================================== */
+
+.main-content {
+    opacity: 0;
+    animation: fadeIn 1.2s ease-out forwards 0.5s;
+    overflow-x: hidden;
+}
+
+.sound-control-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sound-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.sound-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.music-tooltip {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    pointer-events: none;
+    animation: pulse 1.5s infinite alternate;
+}
+
+/* Floating Particles */
+.balloon-container, .stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.balloon {
+    position: absolute;
+    width: 45px;
+    height: 55px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    opacity: 0.8;
+    bottom: -100px;
+    animation: floatUp 15s linear infinite;
+    display: flex;
+    justify-content: center;
+}
+
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 2px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    width: 8px;
+    height: 6px;
+    background: inherit;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.twinkle-star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+/* Hero Title Section */
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px 20px 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.profile-image-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--primary-color);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.profile-image-container:hover {
+    transform: scale(1.1) rotate(5deg);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 35px rgba(245, 158, 11, 0.7);
+}
+
+.hero-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.birthday-banner-container {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    padding: 60px 40px;
+    border-radius: 24px;
+    max-width: 800px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.birthday-banner-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    animation: rotateBg 20s linear infinite;
+}
+
+.pre-title {
+    font-size: 1.5rem;
+    letter-spacing: 6px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.boy-name {
+    font-size: 4.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+.boy-name .highlight {
+    background: linear-gradient(to right, #f59e0b, #ec4899, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowText 6s linear infinite;
+    background-size: 200% 200%;
+}
+
+.birthday-sub {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+}
+
+/* Message Ticker */
+.wishes-ticker {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 25s linear infinite;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ==========================================
+   3. INTERACTIVE BIRTHDAY CAKE
+   ========================================== */
+
+.cake-container {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mic-request-container {
+    margin-bottom: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.mic-status {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* 3D Cake Design */
+.cake {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    margin-top: 50px;
+}
+
+.stand {
+    position: absolute;
+    width: 300px;
+    height: 20px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    bottom: -10px;
+    left: -25px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cake-layer {
+    position: absolute;
+    width: 250px;
+    border-radius: 30px 30px 10px 10px;
+}
+
+.layer-bottom {
+    height: 70px;
+    background: #6f4e37; /* Chocolate */
+    bottom: 10px;
+}
+
+.layer-top {
+    height: 70px;
+    background: #b5651d; /* Light chocolate/caramel */
+    bottom: 75px;
+    border-radius: 30px 30px 0 0;
+}
+
+.frosting {
+    position: absolute;
+    background: #ffb7c5; /* Pink Strawberry Frosting */
+    border-radius: 10px;
+    width: 250px;
+}
+
+.frosting-middle {
+    height: 15px;
+    bottom: 70px;
+    background: white;
+}
+
+.frosting-top {
+    height: 25px;
+    bottom: 135px;
+    border-radius: 30px 30px 10px 10px;
+}
+
+.cherry-decor {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 15px;
+    margin-top: 5px;
+}
+
+.cherry-decor span {
+    width: 15px;
+    height: 15px;
+    background: var(--danger-color);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Candles */
+.candle-container {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    z-index: 5;
+}
+
+.candle {
+    position: relative;
+    width: 16px;
+    height: 70px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.candle:hover {
+    transform: scale(1.1);
+}
+
+.candle-body {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #00f2fe, #4facfe);
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.4) 5px, rgba(255,255,255,0.4) 10px);
+}
+
+.candle:nth-child(2) .candle-body {
+    background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+}
+
+.candle:nth-child(3) .candle-body {
+    background: linear-gradient(to right, #f9d423, #ff4e50);
+}
+
+.thread {
+    width: 2px;
+    height: 10px;
+    background: #333;
+    position: absolute;
+    top: -10px;
+    left: calc(50% - 1px);
+}
+
+.flame {
+    width: 16px;
+    height: 24px;
+    background: radial-gradient(circle at bottom, #ff9900 20%, #ff5500 50%, #ffff00 80%);
+    border-radius: 50% 50% 20% 20% / 70% 70% 30% 30%;
+    position: absolute;
+    top: -32px;
+    left: calc(50% - 8px);
+    box-shadow: 0 0 10px rgba(255, 153, 0, 0.6), 0 0 20px rgba(255, 85, 0, 0.4);
+    animation: flicker 0.8s infinite alternate ease-in-out;
+    transform-origin: bottom center;
+    transition: all 0.3s ease;
+}
+
+.candle.blown-out .flame {
+    transform: scale(0);
+    opacity: 0;
+}
+
+/* Cake Wish Bubble */
+.cake-wishes {
+    margin-top: 30px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.wish-bubble {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: 15px 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wish-bubble h3 {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+/* ==========================================
+   4. POLAROID PHOTO GALLERY
+   ========================================== */
+
+.polaroid-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    padding: 20px;
+}
+
+.polaroid-card {
+    background: white;
+    padding: 15px 15px 25px 15px;
+    width: 250px;
+    border-radius: 4px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transform: rotate(var(--rotation));
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+}
+
+.polaroid-card:hover {
+    transform: rotate(0deg) scale(1.1) translateY(-10px);
+    z-index: 10;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.polaroid-img-container {
+    width: 100%;
+    height: 220px;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.polaroid-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    opacity: 0; /* JS fills src and sets opacity 1 */
+}
+
+.polaroid-card:hover .polaroid-img-container img {
+    transform: scale(1.08);
+}
+
+.img-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+    background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.img-loaded .img-placeholder {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.polaroid-caption {
+    font-family: var(--font-handwritten);
+    font-size: 1.8rem;
+    color: #334155;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* ==========================================
+   5. SURPRISE GIFT BOX
+   ========================================== */
+
+.gift-box-container {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.gift-box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+}
+
+.gift-box.shake {
+    animation: shake 0.6s infinite;
+}
+
+.gift-box:hover {
+    transform: scale(1.05);
+}
+
+.gift-lid {
+    position: absolute;
+    width: 160px;
+    height: 40px;
+    background: var(--danger-color);
+    left: -5px;
+    top: -30px;
+    border-radius: 4px;
+    z-index: 2;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.ribbon-vertical-lid {
+    position: absolute;
+    width: 25px;
+    height: 100%;
+    background: var(--accent-color);
+    left: calc(50% - 12.5px);
+}
+
+.ribbon-horizontal-lid {
+    position: absolute;
+    width: 100%;
+    height: 15px;
+    background: var(--accent-color);
+    top: calc(50% - 7.5px);
+}
+
+.ribbon-bow {
+    position: absolute;
+    width: 50px;
+    height: 25px;
+    background: var(--accent-color);
+    top: -20px;
+    left: calc(50% - 25px);
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.ribbon-bow::before, .ribbon-bow::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border: 5px solid var(--accent-color);
+    border-radius: 50%;
+    top: -5px;
+}
+
+.ribbon-bow::before { left: -10px; }
+.ribbon-bow::after { right: -10px; }
+
+.gift-body {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #e11d48; /* Red body */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.ribbon-vertical-body {
+    position: absolute;
+    width: 25px;
+    height: 100%;
+    background: var(--accent-color);
+    left: calc(50% - 12.5px);
+}
+
+/* Open Gift Box State */
+.gift-box.open .gift-lid {
+    transform: translateY(-80px) rotate(25deg) scale(0.9);
+    opacity: 0;
+}
+
+.gift-box.open {
+    transform: scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+/* Surprise Card */
+.surprise-card {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    perspective: 1000px;
+    z-index: 6;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    cursor: pointer;
+}
+
+.surprise-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.surprise-card.flipped .surprise-inner {
+    transform: rotateY(180deg);
+}
+
+.surprise-front, .surprise-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.surprise-front {
+    background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%);
+    color: white;
+}
+
+.surprise-icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    animation: pulse 1.2s infinite alternate;
+}
+
+.surprise-back {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.surprise-back h3 {
+    margin-bottom: 10px;
+}
+
+.surprise-back p {
+    font-size: 1.05rem;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.gift-coupon {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px dashed white;
+    padding: 6px 15px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+/* ==========================================
+   6. WISHES MESSAGE BOARD & SUBMISSION
+   ========================================== */
+
+.wishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 50px;
+}
+
+.wish-card {
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: rotate(var(--rot, -1deg));
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wish-card:nth-child(even) {
+    --rot: 2deg;
+}
+
+.wish-card:nth-child(3n) {
+    --rot: -2deg;
+}
+
+.wish-card:nth-child(4n) {
+    --rot: 1.5deg;
+}
+
+.wish-card:hover {
+    transform: scale(1.05) rotate(0deg);
+    z-index: 4;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.wish-card .pin {
+    position: absolute;
+    top: -12px;
+    left: calc(50% - 10px);
+    font-size: 1.3rem;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+}
+
+.wish-text {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    color: #1e293b;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.wish-author {
+    display: block;
+    text-align: right;
+    font-weight: 700;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+/* Colors for Card Post-its */
+.color-1 { background-color: #fef08a; } /* Pastel Yellow */
+.color-2 { background-color: #bfdbfe; } /* Pastel Blue */
+.color-3 { background-color: #bbf7d0; } /* Pastel Green */
+.color-4 { background-color: #fbcfe8; } /* Pastel Pink */
+
+/* Custom Form Style */
+.custom-wish-form {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.custom-wish-form h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group input, .form-group textarea {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+
+.main-footer {
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    background: rgba(15, 23, 42, 0.4);
+    z-index: 2;
+    position: relative;
+}
+
+.main-footer p {
+    color: var(--text-secondary);
+    margin: 5px 0;
+}
+
+/* ==========================================
+   ANIMATIONS & KEYFRAMES
+   ========================================== */
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(6, 182, 212, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes flicker {
+    0% { transform: scaleX(1) rotate(-1deg); }
+    50% { transform: scaleX(0.9) rotate(1.5deg); }
+    100% { transform: scaleX(1.1) rotate(-0.5deg); }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(0px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(2px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(2px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+@keyframes rotateBg {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rainbowText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .boy-name {
+        font-size: 3rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+    
+    .birthday-banner-container {
+        padding: 40px 20px;
+    }
+    
+    .polaroid-card {
+        width: 280px;
+    }
+}
