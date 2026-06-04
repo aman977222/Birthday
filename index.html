@@ -86,7 +86,7 @@
                     <button id="mic-enable-btn" class="secondary-btn">
                         <i class="fa-solid fa-microphone"></i> Enable Microphone to Blow out Candles
                     </button>
-                    <span id="mic-status" class="mic-status">Microphone is Off</span>
+                    <span id="mic-status" class="mic-status">click the candles or blow/Microphone is Off</span>
                 </div>
 
                 <div class="cake">
@@ -182,8 +182,355 @@
         </footer>
     </div>
 
+    <!-- 3. Music Control & Login Modal (Control Center) -->
+    <div id="control-center-modal" class="cc-modal hidden">
+        <div class="cc-modal-backdrop"></div>
+        <div class="cc-modal-content">
+            <div class="cc-header">
+                <h3><i class="fa-solid fa-sliders"></i> Control Center</h3>
+                <button id="close-cc-btn" class="cc-close-btn">&times;</button>
+            </div>
+            
+            <!-- Music Quick Player -->
+            <div class="cc-music-player">
+                <div class="music-info">
+                    <i class="fa-solid fa-music music-note-animated"></i>
+                    <div>
+                        <div class="music-title">Birthday Celebration Track</div>
+                        <div class="music-status-text">Playing custom audio</div>
+                    </div>
+                </div>
+                <div class="music-controls">
+                    <button id="cc-music-play-btn" class="player-btn"><i class="fa-solid fa-play"></i></button>
+                    <div class="volume-container">
+                        <i class="fa-solid fa-volume-low"></i>
+                        <input type="range" id="cc-volume-slider" min="0" max="1" step="0.05" value="0.7">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cc-divider"></div>
+            
+            <!-- Admin / Super Admin Login Area -->
+            <div class="cc-login-area">
+                <h4><i class="fa-solid fa-shield-halved"></i> Portal Login</h4>
+                
+                <form id="cc-login-form">
+                    <div class="cc-input-group">
+                        <label for="cc-username">Username</label>
+                        <input type="text" id="cc-username" placeholder="Enter username" autocomplete="username" required>
+                    </div>
+                    <div class="cc-input-group">
+                        <label for="cc-password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="cc-password" placeholder="Enter password" autocomplete="current-password" required>
+                            <button type="button" id="toggle-pw-visibility" class="pw-eye-btn"><i class="fa-regular fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div id="login-error-msg" class="login-error hidden">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Invalid credentials. Please try again.
+                    </div>
+                    <button type="submit" class="submit-btn login-submit-btn">
+                        <span>Access Portal</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Admin & Super Admin Dashboard Overlay -->
+    <div id="admin-dashboard" class="dashboard-overlay hidden">
+        <div class="dashboard-container">
+            <header class="db-header">
+                <div class="db-title-container">
+                    <span class="db-badge" id="db-role-badge">Admin</span>
+                    <h2>Dashboard Portal</h2>
+                </div>
+                <div class="db-actions">
+                    <button id="db-view-site-btn" class="secondary-btn" style="background: var(--primary-color); color: white; border: none;"><i class="fa-solid fa-globe"></i> Go to Website</button>
+                    <button id="db-refresh-btn" class="secondary-btn"><i class="fa-solid fa-rotate"></i> Refresh</button>
+                    <button id="db-logout-btn" class="secondary-btn db-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                    <button id="db-close-btn" class="cc-close-btn">&times;</button>
+                </div>
+            </header>
+            
+            <div class="db-body">
+                <!-- Sidebar Menu -->
+                <aside class="db-sidebar">
+                    <button class="db-tab-link active" data-target="db-profile-section"><i class="fa-solid fa-user"></i> Profile & Gallery</button>
+                    <button class="db-tab-link" data-target="db-theme-section"><i class="fa-solid fa-palette"></i> Music & Theme</button>
+                    <button class="db-tab-link superadmin-only-tab" data-target="db-profiles-section"><i class="fa-solid fa-users-gear"></i> Profiles Manager</button>
+                    <button class="db-tab-link" data-target="db-security-section"><i class="fa-solid fa-lock"></i> Security</button>
+                </aside>
+                
+                <!-- Main Content Pane -->
+                <main class="db-content">
+                    
+                    <!-- Tab 1: Profile Info & Gallery combined -->
+                    <section id="db-profile-section" class="db-tab-content active">
+                        <h3>Edit Birthday Profile Details</h3>
+                        <div class="db-form-row">
+                            <div class="db-form-group">
+                                <label for="edit-profile-name">Name of Birthday Person</label>
+                                <input type="text" id="edit-profile-name" placeholder="e.g. Aman">
+                            </div>
+                            <div class="db-form-group">
+                                <label for="edit-profile-relation">Relationship / Prefix text</label>
+                                <input type="text" id="edit-profile-relation" placeholder="e.g. Dear Brother, My Friend">
+                            </div>
+                        </div>
+                        
+                        <div class="db-form-group">
+                            <label for="edit-profile-subtitle">Wishes Subtitle Message</label>
+                            <textarea id="edit-profile-subtitle" rows="3" placeholder="Enter warm wishes description..."></textarea>
+                        </div>
+                        
+                        <div class="db-form-group">
+                            <label>Profile Image</label>
+                            <div class="image-uploader-container">
+                                <div class="image-preview-box">
+                                    <img id="profile-img-preview" src="images/aman.png" alt="Profile Preview">
+                                </div>
+                                <div class="image-upload-controls">
+                                    <input type="file" id="profile-img-file" accept="image/*" class="file-input-hidden">
+                                    <button type="button" class="secondary-btn upload-trigger-btn" onclick="document.getElementById('profile-img-file').click()"><i class="fa-solid fa-upload"></i> Upload Image</button>
+                                    <span class="file-info-text">Or enter Image URL below:</span>
+                                    <input type="text" id="edit-profile-img-url" placeholder="https://example.com/image.jpg">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cc-divider" style="margin: 25px 0;"></div>
+
+                        <h3>Edit Polaroid Photo Album</h3>
+                        <p class="db-help-text">Update the 4 polaroid pictures shown on the birthday page.</p>
+                        
+                        <div class="polaroid-editors-grid">
+                            <!-- Polaroid 1 -->
+                            <div class="polaroid-edit-card">
+                                <h4>Polaroid Image 1</h4>
+                                <div class="polaroid-preview">
+                                    <img id="pol-preview-1" src="images/boy_childhood.png" alt="Polaroid 1">
+                                </div>
+                                <input type="file" id="pol-file-1" accept="image/*" class="file-input-hidden">
+                                <button type="button" class="secondary-btn upload-trigger-btn btn-sm" onclick="document.getElementById('pol-file-1').click()"><i class="fa-solid fa-upload"></i> Upload</button>
+                                <input type="text" id="pol-url-1" placeholder="Image URL">
+                                <input type="text" id="pol-caption-1" placeholder="Caption (e.g. Sweet Childhood 👶)">
+                            </div>
+                            
+                            <!-- Polaroid 2 -->
+                            <div class="polaroid-edit-card">
+                                <h4>Polaroid Image 2</h4>
+                                <div class="polaroid-preview">
+                                    <img id="pol-preview-2" src="images/boy_style.png" alt="Polaroid 2">
+                                </div>
+                                <input type="file" id="pol-file-2" accept="image/*" class="file-input-hidden">
+                                <button type="button" class="secondary-btn upload-trigger-btn btn-sm" onclick="document.getElementById('pol-file-2').click()"><i class="fa-solid fa-upload"></i> Upload</button>
+                                <input type="text" id="pol-url-2" placeholder="Image URL">
+                                <input type="text" id="pol-caption-2" placeholder="Caption (e.g. Cool Dude 😎)">
+                            </div>
+                            
+                            <!-- Polaroid 3 -->
+                            <div class="polaroid-edit-card">
+                                <h4>Polaroid Image 3</h4>
+                                <div class="polaroid-preview">
+                                    <img id="pol-preview-3" src="images/boy_smiling.png" alt="Polaroid 3">
+                                </div>
+                                <input type="file" id="pol-file-3" accept="image/*" class="file-input-hidden">
+                                <button type="button" class="secondary-btn upload-trigger-btn btn-sm" onclick="document.getElementById('pol-file-3').click()"><i class="fa-solid fa-upload"></i> Upload</button>
+                                <input type="text" id="pol-url-3" placeholder="Image URL">
+                                <input type="text" id="pol-caption-3" placeholder="Caption (e.g. Keep Smiling Always 😄)">
+                            </div>
+                            
+                            <!-- Polaroid 4 -->
+                            <div class="polaroid-edit-card">
+                                <h4>Polaroid Image 4</h4>
+                                <div class="polaroid-preview">
+                                    <img id="pol-preview-4" src="images/boy_party.png" alt="Polaroid 4">
+                                </div>
+                                <input type="file" id="pol-file-4" accept="image/*" class="file-input-hidden">
+                                <button type="button" class="secondary-btn upload-trigger-btn btn-sm" onclick="document.getElementById('pol-file-4').click()"><i class="fa-solid fa-upload"></i> Upload</button>
+                                <input type="text" id="pol-url-4" placeholder="Image URL">
+                                <input type="text" id="pol-caption-4" placeholder="Caption (e.g. Party Time! 🕺)">
+                            </div>
+                        </div>
+                        <div class="db-section-actions" style="margin-top: 30px; display: flex; justify-content: flex-end;">
+                            <button class="submit-btn db-section-save-btn" data-section="profile"><i class="fa-solid fa-save"></i> Save Profile & Gallery</button>
+                        </div>
+                    </section>
+                    
+                    <!-- Tab 3: Music & Theme -->
+                    <section id="db-theme-section" class="db-tab-content">
+                        <h3>Background Music & Page Effects</h3>
+                        
+                        <div class="db-form-group">
+                            <label for="edit-song-url">Background Music Audio Source URL</label>
+                            <input type="text" id="edit-song-url" placeholder="song.mp3 or an external link">
+                            <span class="db-help-text">Specify a local audio file or an external direct MP3 audio URL.</span>
+                        </div>
+                        
+                        <div class="db-form-group">
+                            <label for="edit-ticker-text">Scrolling Wishes Ticker Content</label>
+                            <textarea id="edit-ticker-text" rows="3" placeholder="Wishes separated by '|' ..."></textarea>
+                            <span class="db-help-text">Separate messages with a vertical bar '|'. Example: Happy Birthday! | Live happy always!</span>
+                        </div>
+                        
+                        <div class="db-form-group">
+                            <label for="edit-particle-type">Floating Background Particles</label>
+                            <select id="edit-particle-type">
+                                <option value="balloons">Colorful Balloons 🎈</option>
+                                <option value="stars">Twinkling Stars ⭐</option>
+                                <option value="hearts">Floating Hearts ❤️</option>
+                                <option value="mixed">Mixed Celebration 🎉</option>
+                            </select>
+                        </div>
+                        
+                        <div class="db-form-group">
+                            <label>Design Color Palette (Theme)</label>
+                            <div class="theme-presets-grid">
+                                <div class="theme-preset-card active" data-theme="midnight">
+                                    <div class="theme-preset-preview" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);"></div>
+                                    <div class="theme-preset-name">Midnight Teal (Default)</div>
+                                </div>
+                                <div class="theme-preset-card" data-theme="sunset">
+                                    <div class="theme-preset-preview" style="background: linear-gradient(135deg, #2e0854 0%, #8b0000 50%, #ff8c00 100%);"></div>
+                                    <div class="theme-preset-name">Sunset Magic</div>
+                                </div>
+                                <div class="theme-preset-card" data-theme="royal">
+                                    <div class="theme-preset-preview" style="background: linear-gradient(135deg, #000000 0%, #1e1b4b 50%, #b59410 100%);"></div>
+                                    <div class="theme-preset-name">Golden Royal</div>
+                                </div>
+                                <div class="theme-preset-card" data-theme="rose">
+                                    <div class="theme-preset-preview" style="background: linear-gradient(135deg, #4c0519 0%, #881337 50%, #fda4af 100%);"></div>
+                                    <div class="theme-preset-name">Rose Garden</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="db-section-actions" style="margin-top: 30px; display: flex; justify-content: flex-end;">
+                            <button class="submit-btn db-section-save-btn" data-section="theme"><i class="fa-solid fa-save"></i> Save Music & Theme</button>
+                        </div>
+                    </section>
+                    
+                    <!-- Tab 4: Profiles Configuration (Super Admin Only) -->
+                    <section id="db-profiles-section" class="db-tab-content">
+                        <h3>Profiles Configuration Manager</h3>
+                        <p class="db-help-text">Switch active profiles or delete birthday configurations dynamically. Each profile contains independent birthday details, images, and configuration.</p>
+                        
+                        <div class="profiles-list-wrapper">
+                            <table class="profiles-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Relation</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="profiles-table-body">
+                                    <!-- Dynamic rows from JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    
+                    <!-- Tab 5: Security -->
+                    <section id="db-security-section" class="db-tab-content">
+                        <h3>Security Credentials Management</h3>
+                        
+                        <div class="security-forms">
+                            <div class="security-card admin-only-card">
+                                <h4>Change Admin Password</h4>
+                                <form id="form-change-admin-pw">
+                                    <div class="db-form-group">
+                                        <label for="admin-new-pw">New Password</label>
+                                        <input type="password" id="admin-new-pw" placeholder="Enter new password" required>
+                                    </div>
+                                    <div class="db-form-group">
+                                        <label for="admin-confirm-pw">Confirm Password</label>
+                                        <input type="password" id="admin-confirm-pw" placeholder="Confirm new password" required>
+                                    </div>
+                                    <div id="admin-pw-status" class="status-msg"></div>
+                                    <button type="submit" class="submit-btn btn-sm">Update Admin Password</button>
+                                </form>
+                            </div>
+                            
+                            <div class="security-card superadmin-only-card">
+                                <h4>Change Super Admin Password</h4>
+                                <form id="form-change-sa-pw">
+                                    <div class="db-form-group">
+                                        <label for="sa-new-pw">New Password</label>
+                                        <input type="password" id="sa-new-pw" placeholder="Enter new password" required>
+                                    </div>
+                                    <div class="db-form-group">
+                                        <label for="sa-confirm-pw">Confirm Password</label>
+                                        <input type="password" id="sa-confirm-pw" placeholder="Confirm new password" required>
+                                    </div>
+                                    <div id="sa-pw-status" class="status-msg"></div>
+                                    <button type="submit" class="submit-btn btn-sm">Update Super Admin Password</button>
+                                </form>
+                            </div>
+
+                            <div class="security-card superadmin-only-card">
+                                <h4>Add New Admin / Super Admin</h4>
+                                <form id="form-add-portal-user">
+                                    <div class="db-form-group">
+                                        <label for="add-user-username">Username</label>
+                                        <input type="text" id="add-user-username" placeholder="Enter username" required>
+                                    </div>
+                                    <div class="db-form-group">
+                                        <label for="add-user-password">Password</label>
+                                        <input type="password" id="add-user-password" placeholder="Enter password" required>
+                                    </div>
+                                    <div class="db-form-group">
+                                        <label for="add-user-role">Role</label>
+                                        <select id="add-user-role" required>
+                                            <option value="admin">Admin</option>
+                                            <option value="superadmin">Super Admin</option>
+                                        </select>
+                                    </div>
+                                    <div id="add-user-status" class="status-msg"></div>
+                                    <button type="submit" class="submit-btn btn-sm">Add User</button>
+                                </form>
+                                
+                                <h4 style="margin-top: 25px;">Current Custom Users</h4>
+                                <div class="custom-users-list-wrapper">
+                                    <table class="profiles-table" style="font-size: 0.9rem; margin-top: 10px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>Role</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="custom-users-table-body">
+                                            <!-- Dynamic rows from JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cc-divider"></div>
+                        
+                        <div class="danger-zone">
+                            <h4>System Factory Reset</h4>
+                            <p>This will erase all custom profiles, images, and restore the site back to its original layout and password credentials.</p>
+                            <button id="btn-factory-reset" class="secondary-btn btn-danger"><i class="fa-solid fa-triangle-exclamation"></i> Reset Website Data</button>
+                        </div>
+                    </section>
+                </main>
+            </div>
+            
+        </div>
+    </div>
+
     <!-- Custom Birthday Song Audio Element -->
     <audio id="birthday-song" src="song.mp3" loop></audio>
+
+    <!-- Firebase Compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- Script file -->
     <script src="script.js"></script>
